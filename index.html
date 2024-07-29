@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Clock</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: #282c34;
+        color: #61dafb;
+        font-family: "Arial", sans-serif;
+      }
+      .mainDiv {
+        background: #20232a;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #clock {
+        font-size: 3em;
+        transition: all 0.5s ease-in-out;
+        margin-bottom: 20px;
+      }
+      button {
+        background: #61dafb;
+        border: none;
+        border-radius: 0.3rem;
+        color: #282c34;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+        margin: 0.3rem;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      button:hover {
+        background: #4fa3c1;
+        transform: scale(1.1);
+      }
+      a {
+        text-decoration: none;
+        color: rgb(36, 36, 36);
+        font-size: 25px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mainDiv">
+      <p id="clock"></p>
+      <button><a href="./stopWatch.html"> Stop Clock </a></button>
+    </div>
+    <script>
+      const timeout = () => {
+        let time = new Date().toLocaleTimeString();
+        document.getElementById("clock").innerHTML = time;
+      };
+      timeout();
+      const timeout1 = setInterval(timeout, 1000);
+    </script>
+  </body>
+</html>

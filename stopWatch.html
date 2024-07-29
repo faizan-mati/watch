@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stopwatch</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #282c34;
+        color: #61dafb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        text-align: center;
+      }
+
+      #count {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: #20232a;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      }
+
+      .button {
+        margin: 1rem 0;
+      }
+
+      button {
+        background: #61dafb;
+        border: none;
+        border-radius: 0.3rem;
+        color: #282c34;
+        font-size: 1.2rem;
+        padding: 0.5rem 1rem;
+        margin: 0.3rem;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+
+      button:hover {
+        background: #4fa3c1;
+        transform: scale(1.1);
+      }
+
+      .restValue {
+        margin-top: 1rem;
+        color: #61dafb;
+        font-size: 1.2rem;
+        text-align: left;
+      }
+
+      .restValue p {
+        margin: 0.5rem 0;
+      }
+      a {
+        text-decoration: none;
+        color: rgb(36, 36, 36);
+        font-size: 25px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="count">0.000</div>
+      <div class="button">
+        <button class="start">Start</button>
+        <button class="stop">Stop</button>
+        <button class="reset">Reset</button>
+        <button class="gettime">Get Time</button>
+        <button class="clear">Clear</button>
+      </div>
+      <button><a href="./index.html"> Digital Watch </a></button>
+      <div class="restValue"></div>
+    </div>
+
+    <script>
+      let count = document.getElementById("count");
+      let restValue = document.querySelector(".restValue");
+      let start = 0;
+      let intervalID = null; // Initialize as null
+
+      const showValue = () => {
+        let para = document.createElement("p");
+        para.innerHTML = `Current Time: ${start.toFixed(3)} seconds`;
+        restValue.append(para);
+      };
+
+      const stoptime = () => {
+        let para = document.createElement("p");
+        para.innerHTML = `Stopped Time: ${start.toFixed(3)} seconds`;
+        restValue.append(para);
+      };
+
+      const startFun = () => {
+        if (intervalID) return; // Prevent multiple intervals
+        let previousTime = Date.now();
+        intervalID = setInterval(() => {
+          const currentTime = Date.now();
+          const elapsedTime = currentTime - previousTime;
+          previousTime = currentTime;
+          start += elapsedTime / 1000;
+          count.innerHTML = start.toFixed(3);
+        }, 10);
+      };
+
+      const stopFun = () => {
+        if (!intervalID) return; // Do nothing if no interval is running
+        stoptime();
+        clearInterval(intervalID);
+        intervalID = null; // Reset the intervalID
+      };
+
+      const resetFun = () => {
+        start = 0;
+        count.innerHTML = start.toFixed(3);
+        clearInterval(intervalID);
+        intervalID = null; // Reset the intervalID
+      };
+
+      const clearFun = () => {
+        restValue.innerHTML = "";
+      };
+
+      document.querySelector(".stop").addEventListener("click", stopFun);
+      document.querySelector(".start").addEventListener("click", startFun);
+      document.querySelector(".reset").addEventListener("click", resetFun);
+      document.querySelector(".gettime").addEventListener("click", showValue);
+      document.querySelector(".clear").addEventListener("click", clearFun);
+    </script>
+  </body>
+</html>
